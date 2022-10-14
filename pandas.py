@@ -36,3 +36,9 @@ behav_data = behav_data.loc[behav_data["Med_Rating"]<2,:]
 
 # merge data frame:
 behav_feature = behav_data_hc.merge(multimodal_features, how = "inner", right_on = "names", left_on = "SUBJID")
+
+
+# stats by group:
+print(subject_split_info[["Train_index", "Sex"]].groupby(["Train_index", "Sex"]).size())
+print(subject_split_info[["Train_index", "age_at_cnb"]].groupby(["Train_index"]).mean())
+subject_split_info[["Train_index", "age_at_cnb"]].groupby(["Train_index"]).std()
