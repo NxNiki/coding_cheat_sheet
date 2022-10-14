@@ -42,3 +42,6 @@ behav_feature = behav_data_hc.merge(multimodal_features, how = "inner", right_on
 print(subject_split_info[["Train_index", "Sex"]].groupby(["Train_index", "Sex"]).size())
 print(subject_split_info[["Train_index", "age_at_cnb"]].groupby(["Train_index"]).mean())
 subject_split_info[["Train_index", "age_at_cnb"]].groupby(["Train_index"]).std()
+
+# get column values:
+features_keys = features_keys.columns.get_level_values(0)
