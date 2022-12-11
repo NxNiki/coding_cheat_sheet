@@ -34,6 +34,13 @@ behav_data["Med_Rating"] = behav_data["Med_Rating"].apply(pd.to_numeric, errors=
 # select rows based on value in column:
 behav_data = behav_data.loc[behav_data["Med_Rating"]<2,:]
 
+# select rows based on multiple conditions:
+# need parenthese for each condition: (condition1) & (condition2)
+value = complete_df.loc[(complete_df['site']==tms) & (~complete_df[var].isna()), var]
+
+# multilevel index:
+row_index = pd.MultiIndex.from_tuples([(i , j) for i in test_variables for j in ['t value', 'p value', "Cohen's d",]])
+
 # merge data frame:
 behav_feature = behav_data_hc.merge(multimodal_features, how = "inner", right_on = "names", left_on = "SUBJID")
 
