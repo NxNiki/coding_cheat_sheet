@@ -55,7 +55,6 @@ features_keys = features_keys.columns.get_level_values(0)
 
 
 # format report of p values:
-
 report2 = report.copy()
 report2.iloc[:, 1:] = report2.iloc[:, 1:].astype(float).round(3)
 # report.iloc[:,1:]=report.iloc[:,1:].mask(report.iloc[:,1:].le(0.05), report.astype(str).apply(lambda x : x.str[:5]).add('*'))
@@ -68,3 +67,7 @@ report2[report_corrected.iloc[:,1:].le(0.05)] = report2[
 
 report2[report_corrected.iloc[:,1:].le(0.01)] = report2[
     report_corrected.iloc[:,1:].le(0.01)].astype(str).apply(lambda x : x.str[:5]).add('**')
+
+# or:
+report2[report.gt(0)] = report2[report.gt(0)] .astype(str).apply(lambda x : x.str[:5])
+report2[report.lt(0)] = report2[report.lt(0)] .astype(str).apply(lambda x : x.str[:6])
