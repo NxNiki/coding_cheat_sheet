@@ -68,6 +68,27 @@ report2[report_corrected.iloc[:,1:].le(0.05)] = report2[
 report2[report_corrected.iloc[:,1:].le(0.01)] = report2[
     report_corrected.iloc[:,1:].le(0.01)].astype(str).apply(lambda x : x.str[:5]).add('**')
 
+
 # or:
 report2[report.gt(0)] = report2[report.gt(0)] .astype(str).apply(lambda x : x.str[:5])
 report2[report.lt(0)] = report2[report.lt(0)] .astype(str).apply(lambda x : x.str[:6])
+
+
+# data exploration:
+
+print('How many different companies are represented in the data set?')
+print(len(data['Company Name'].unique()))
+
+print('What is the total number of jobs created for businesses in Queens?')
+print(data.loc[data['Borough'] == 'QUEENS', 'Job created'].sum())
+
+print('How many different unique email domains names are there in the data set?')
+print(data['company email'].str.extract(r".*@(.*)").nunique(axis=0))
+
+print('Considering only NTAs with at least 5 listed businesses, what is the average total savings and the total jobs \n'
+      'created for each NTA?')
+print(data[
+          ['Company Name', 'Job created', 'Total Savings', 'Neighborhood Tabulation Area (NTA) (2020)']
+      ].groupby('Neighborhood Tabulation Area (NTA) (2020)', as_index=True).agg(
+    {'Company Name': 'count', 'Job created': 'mean', 'Total Savings': 'mean'}
+).rename(columns={'Company Name': 'Number of companies'}).query("`Number of companies` >= 5"))
